@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     private String mOutputPath;
     private String mInputFilePath;
     private ProgressDialog mProgressDialog;
+
     private ExecutorService mExecutor;
 
     @Override
@@ -51,6 +52,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         mProgressDialog = new ProgressDialog(this);
+        mProgressDialog.setMessage("در حال انجام عملیات...لطفا شکیبا باشید");
+        mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        mProgressDialog.setCancelable(false);
+        mProgressDialog.setMax(100);
         mExecutor = Executors.newSingleThreadExecutor();
         mText7zVersion.setText(Z7Extractor.getLzmaVersion());
         File outFile = getExternalFilesDir("extracted");
@@ -173,8 +178,8 @@ public class MainActivity extends AppCompatActivity {
                         mOutputPath, new UnzipCallback() {
                             @Override
                             public void onProgress(String name, long size) {
-                                runOnUiThread(() -> mProgressDialog.setMessage("name: "
-                                        + name + "\nsize: " + size));
+                            //    runOnUiThread(() -> mProgressDialog.setMessage("name: "
+                            //            + name + "\nsize: " + size));
                             }
 
                             @Override
